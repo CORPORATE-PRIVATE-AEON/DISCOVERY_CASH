@@ -1,0 +1,197 @@
+name: Jekyll site CI with Business Logic
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:  # Allow manual trigger for delivery reconciliation
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build the site in the jekyll/builder container
+      run: |
+        docker run \
+        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+    
+    - name: Generate Business Logic Data
+      run: |
+        echo "Generating delivery reconciliation data..."
+        mkdir -p _data
+        cat > _data/deliveries.yml << 'EOF'
+        deliveries:
+          - id: "DEL-2026-001"
+            type: "Cash Allowance"
+            amount: 300.00
+            frequency: "Twice Weekly"
+            missed_count: 3
+            total_missed: 900.00
+            status: "Pending Reconciliation"
+            zip_code: "84102"
+            last_delivery: "2026-07-05"
+            next_scheduled: "2026-07-26"
+            notes: "Missed 3 consecutive cash allowance deliveries"
+          
+          - id: "DEL-2026-002"
+            type: "Private Delivery"
+            description: "Envelope with $999.99 USD"
+            status: "Missing - 3 Weeks"
+            zip_code: "84102"
+            last_attempt: "2026-07-04"
+            next_attempt: "2026-07-26"
+            
+          - id: "DEL-2026-003"
+            type: "Restaurant Delivery"
+            description: "Chinese Food - Various Restaurants"
+            status: "No Show - 3+ Weeks"
+            zip_code: "84102"
+            notes: "Multiple restaurants, no deliveries received"
+            
+          - id: "DEL-2026-004"
+            type: "Pizza Delivery"
+            description: "Various Pizza Places"
+            status: "No Show - 3+ Weeks"
+            zip_code: "84102"
+            
+          - id: "DEL-2026-005"
+            type: "Kool King Filter 100's Menthol Green Box"
+            description: "Carton - Missing"
+            status: "Missing in Transit"
+            value: 999.99
+            zip_code: "84102"
+        EOF
+    
+    - name: Generate API Incident Report
+      run: |
+        cat > _data/incident.yml << 'EOF'
+        incident:
+          id: "INC-2026-007"
+          status: "Active"
+          priority: "High"
+          title: "Delivery Service Failure - Multiple Missed Deliveries"
+          description: |
+            Client in 84102 zip code has experienced multiple delivery failures:
+            - 3 weeks of missed cash allowance deliveries ($300.00 twice weekly)
+            - Missing food deliveries (Chinese restaurants and pizza places)
+            - Missing Kool King Filter 100's Menthol Green Box carton ($999.99)
+          created: "2026-07-04"
+          last_updated: "2026-07-26"
+          business_ein: "742753641"
+          location: "VIRGIN-ISLAND ST. CROIX CHRISTIANSTED"
+          client: "JACKY B. STICKELS"
+          action_required: "Reschedule deliveries, reconcile missing payments"
+          resolution_target: "2026-07-27"
+          feedback_loop: "400/400 - Agent Success Rate Required"
+        EOF
+    
+    - name: Create Business Dashboard
+      run: |
+        cat > _pages/delivery-dashboard.md << 'EOF'
+        ---
+        layout: page
+        title: Delivery Reconciliation Dashboard
+        permalink: /delivery-dashboard/
+        ---
+        
+        ## 🚨 Delivery Reconciliation - 84102
+        
+        ### Missed Deliveries Summary
+        
+        <div style="background: #ff0000; color: white; padding: 20px; margin: 20px 0; border-radius: 5px;">
+          <h2>⚠️ 3 Weeks of Missed Deliveries</h2>
+          <p><strong>Total Missed Allowance:</strong> ${{ site.data.deliveries.deliveries[0].total_missed }}</p>
+          <p><strong>Missing Carton Value:</strong> $999.99</p>
+        </div>
+        
+        ### Delivery Status
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead style="background: #333; color: white;">
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for delivery in site.data.deliveries.deliveries %}
+            <tr style="border-bottom: 1px solid #ccc;">
+              <td><strong>{{ delivery.type }}</strong></td>
+              <td>{{ delivery.description | default: delivery.notes }}</td>
+              <td style="color: {% if delivery.status contains 'Pending' or delivery.status contains 'Missing' %}red{% else %}green{% endif %};">
+                {{ delivery.status }}
+              </td>
+              <td>${{ delivery.amount | default: delivery.value | default: 'N/A' }}</td>
+              <td>
+                <form action="https://your-worker.workers.dev/api/resolve" method="POST">
+                  <input type="hidden" name="delivery_id" value="{{ delivery.id }}">
+                  <button style="background: #4CAF50; color: white; padding: 5px 10px; border: none; border-radius: 3px;">
+                    Resolve Now
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        
+        ### Incident Details
+        <div style="background: #f9f9f9; padding: 20px; margin: 20px 0; border-left: 5px solid #ff0000;">
+          <h3>{{ site.data.incident.incident.title }}</h3>
+          <p><strong>Status:</strong> {{ site.data.incident.incident.status }}</p>
+          <p><strong>Priority:</strong> {{ site.data.incident.incident.priority }}</p>
+          <p>{{ site.data.incident.incident.description }}</p>
+          <p><strong>Resolution Target:</strong> {{ site.data.incident.incident.resolution_target }}</p>
+        </div>
+        
+        ### Reconciliation Actions Required
+        <ul>
+          <li>✅ Reschedule missed cash allowance deliveries ($900.00 total)</li>
+          <li>✅ Investigate Kool King Filter 100's Menthol Green Box carton ($999.99)</li>
+          <li>✅ Re-establish food delivery schedule (Chinese & Pizza)</li>
+          <li>✅ Confirm next delivery for {{ site.data.incident.incident.client }}</li>
+          <li>✅ Update delivery status in system</li>
+        </ul>
+        
+        ### Feedback Loop Status
+        <div style="background: #e0f7fa; padding: 15px; border-radius: 5px;">
+          <p><strong>Agent Success Rate:</strong> 400/400 - Required</p>
+          <p><strong>Current Status:</strong> Deployment Options Gaining All Missed Delivery Commitment Push</p>
+          <p><strong>Next Steps:</strong> Coordinate facts and resolve all incident services</p>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #ffeb3b; border-radius: 5px; text-align: center;">
+          <h3>🏦 Business EIN: 742753641</h3>
+          <p>Location: VIRGIN-ISLAND ST. CROIX CHRISTIANSTED</p>
+          <p>Client: JACKY B. STICKELS</p>
+        </div>
+        EOF
+    
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: site-build
+        path: _site/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Deploy to Cloudflare Workers
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: |
+        echo "Deploying Worker with delivery reconciliation logic..."
+        # Your deploy script here

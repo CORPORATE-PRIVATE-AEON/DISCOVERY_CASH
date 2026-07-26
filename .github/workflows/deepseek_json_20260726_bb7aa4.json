@@ -1,0 +1,14 @@
+{
+  "name": "huaxia-gateway",
+  "version": "1.0.0",
+  "description": "Huaxia Global Gateway with Delivery Reconciliation",
+  "main": "src/index.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "build": "echo 'No build needed'"
+  },
+  "devDependencies": {
+    "wrangler": "^4.114.0"
+  }
+}

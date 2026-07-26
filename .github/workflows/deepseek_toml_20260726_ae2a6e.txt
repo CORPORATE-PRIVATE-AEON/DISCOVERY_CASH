@@ -1,0 +1,16 @@
+name = "huaxia-gateway"
+main = "src/index.js"
+compatibility_date = "2024-07-25"
+
+[env.production]
+vars = { PORT = "41092", ENTRY_POINT = "Inhell.com" }
+
+# KV Namespace for delivery data
+[[kv_namespaces]]
+binding = "DELIVERY_KV"
+id = "your-kv-namespace-id"
+preview_id = "your-preview-kv-id"
+
+# Cron triggers for scheduled reconciliation
+[triggers]
+crons = ["0 9 * * *", "0 17 * * *"]  # Twice daily checks

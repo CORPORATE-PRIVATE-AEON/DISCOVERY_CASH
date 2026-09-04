@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBERVERTEX TURBO LEVERAGE PROTOCOL</title>
+    <style>
+        :root {
+            --gold-primary: #FFD700;
+            --gold-secondary: #B8860B;
+            --gold-dark: #8B6914;
+            --cyber-blue: #00ffff;
+            --cyber-purple: #9b30ff;
+            --matrix-green: #00ff00;
+            --neon-red: #ff0033;
+            --void-black: #0a0a0a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', 'Monaco', monospace;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, var(--void-black) 0%, #000000 100%);
+            color: var(--gold-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            border: 3px solid var(--gold-primary);
+        }
+        
+        .quantum-grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, rgba(255, 215, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(255, 215, 0, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .dna-helix {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            width: 100px;
+            height: 300px;
+            transform: translateY(-50%);
+            opacity: 0.3;
+            animation: rotate-dna 20s linear infinite;
+        }
+        
+        @keyframes rotate-dna {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+        
+        .main-container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* HEADER SECTION */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 215, 0, 0.1) 20%, 
+                rgba(255, 215, 0, 0.2) 50%, 
+                rgba(255, 215, 0, 0.1) 80%, 
+                transparent 100%);
+            border: 2px solid var(--gold-primary);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .title {
+            font-size: 4em;
+            background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary), var(--cyber-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+            position: relative;
+        }
+        
+        .subtitle {
+            color: var(--cyber-blue);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .protocol-code {
+            color: var(--matrix-green);
+            font-size: 1.2em;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid var(--matrix-green);
+            background: rgba(0, 255, 0, 0.05);
+            display: inline-block;
+        }
+        
+        /* LEVER MATRIX */
+        .lever-matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .lever-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .lever-group {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .lever-label {
+            color: var(--cyber-blue);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* LEVER DESIGN */
+        .lever-container {
+            position: relative;
+            width: 200px;
+            height: 400px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+        
+        .lever-base {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 200px;
+            background: linear-gradient(to bottom, #333, #000);
+            border: 3px solid var(--gold-primary);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .lever-shaft {
+            position: absolute;
+            bottom: 200px;
+            left: 50%;
+            transform: translateX(-50%) rotateX(0deg);
+            transform-origin: bottom center;
+            width: 30px;
+            height: 200px;
+            background: linear-gradient(to bottom, var(--gold-primary), var(--gold-dark));
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            z-index: 10;
+        }
+        
+        .lever-shaft.active {
+            transform: translateX(-50%) rotateX(-60deg);
+            background: linear-gradient(to bottom, var(--neon-red), #8b0000);
+            box-shadow: 0 0 50px rgba(255, 0, 51, 0.7);
+        }
+        
+        .lever-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
+            border-radius: 20px;
+            border: 2px solid var(--gold-dark);
+        }
+        
+        .lever-indicator {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8em;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+            transition: all 0.3s;
+        }
+        
+        /* PROGRESS TRACKERS */
+        .progress-matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .progress-tracker {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--gold-primary);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .tracker-title {
+            color: var(--cyber-blue);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--gold-primary);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold-primary), var(--neon-red));
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .percentage {
+            font-size: 2em;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+            margin: 10px 0;
+        }
+        
+        /* ACTION BUTTONS */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .action-btn {
+            padding: 25px 20px;
+            background: linear-gradient(45deg, var(--void-black), rgba(255, 215, 0, 0.1));
+            border: 3px solid var(--gold-primary);
+            color: var(--gold-primary);
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .action-btn:hover::before {
+            left: 100%;
+        }
+        
+        .action-btn:hover {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), var(--void-black));
+            border-color: var(--cyber-blue);
+            color: var(--cyber-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+        
+        .action-btn.active {
+            background: linear-gradient(45deg, var(--neon-red), #8b0000);
+            border-color: var(--neon-red);
+            color: white;
+            animation: pulse-active 1s infinite;
+        }
+        
+        @keyframes pulse-active {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 51, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 51, 0.8); }
+        }
+        
+        /* DOWNLOAD/UPLOAD SECTIONS */
+        .data-transfer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .transfer-section {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--cyber-purple);
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .transfer-title {
+            color: var(--cyber-purple);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        .file-input {
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px dashed var(--gold-primary);
+            border-radius: 10px;
+            color: var(--gold-primary);
+            font-size: 1.2em;
+            margin: 20px 0;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .file-input:hover {
+            border-color: var(--cyber-blue);
+            background: rgba(0, 255, 255, 0.05);
+        }
+        
+        /* VERTEX DEPLOYMENT */
+        .vertex-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin: 60px 0;
+            border: 3px solid var(--matrix-green);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .vertex-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            gap: 1px;
+            background: rgba(0, 255, 0, 0.05);
+        }
+        
+        .vertex-node {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .vertex-node.active {
+            background: rgba(255, 215, 0, 0.8);
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 20px var(--gold-primary);
+            animation: node-pulse 1s infinite;
+        }
+        
+        @keyframes node-pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        /* CONSOLE OUTPUT */
+        .cyber-console {
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid var(--matrix-green);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 40px 0;
+            min-height: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .console-line {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .log-system { color: var(--cyber-blue); }
+        .log-success { color: var(--matrix-green); }
+        .log-error { color: var(--neon-red); }
+        .log-warning { color: var(--gold-primary); }
+        .log-data { color: var(--cyber-purple); }
+        
+        /* STATISTICS PANEL */
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--gold-primary);
+            border-radius: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 3em;
+            color: var(--matrix-green);
+            text-shadow: 0 0 20px var(--matrix-green);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: var(--cyber-blue);
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 2px solid var(--gold-primary);
+            background: rgba(255, 215, 0, 0.05);
+        }
+        
+        .footer-text {
+            color: var(--cyber-blue);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .security-code {
+            color: var(--matrix-green);
+            font-family: monospace;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--matrix-green);
+            margin: 20px auto;
+            max-width: 600px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="quantum-grid-overlay"></div>
+    <div class="dna-helix">🧬</div>
+    
+    <div class="main-container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1 class="title">CYBERVERTEX TURBO LEVERAGE</h1>
+            <div class="subtitle">IQ DNA=RNA LATENCY NS1 PROJECTION PROTOCOL</div>
+            <div class="protocol-code">SKU-333-666 | CLOUD INTEL C. | FBI.gov/ITALY | A:/CLOUD BOOT-DRIVE</div>
+        </div>
+        
+        <!-- LEVER MATRIX -->
+        <div class="lever-matrix">
+            <div class="lever-column">
+                <div class="lever-group">
+                    <div class="lever-label">PERCENT IQ LEVER</div>
+                    <div class="lever-container">
+                        <div class="lever-base"></div>
+                        <div class="lever-shaft" id="lever1">
+                            <div class="lever-handle"></div>
+                            <div class="lever-indicator">0%</div>
+                        </div>
+                    </div>
+                    <div class="percentage" id="iqPercent">0%</div>
+                </div>
+                
+                <div class="lever-group">
+                    <div class="lever-label">DNA-RNA LATENCY</div>
+                    <div class="lever-container">
+                        <div class="lever-base"></div>
+                        <div class="lever-shaft" id="lever2">
+                            <div class="lever-handle"></div>
+                            <div class="lever-indicator">NS0</div>
+                        </div>
+                    </div>
+                    <div class="percentage" id="latencyValue">NS0</div>
+                </div>
+            </div>
+            
+            <div class="lever-column">
+                <div class="lever-group">
+                    <div class="lever-label">VERTEX CONGRUENCY</div>
+                    <div class="lever-container">
+                        <div class="lever-base"></div>
+                        <div class="lever-shaft" id="lever3">
+                            <div class="lever-handle"></div>
+                            <div class="lever-indicator">Ø</div>
+                        </div>
+                    </div>
+                    <div class="percentage" id="vertexPercent">0%</div>
+                </div>
+                
+                <div class="lever-group">
+                    <div class="lever-label">ANTI-INTERFERENCE</div>
+                    <div class="lever-container">
+                        <div class="lever-base"></div>
+                        <div class="lever-shaft" id="lever4">
+                            <div class="lever-handle"></div>
+                            <div class="lever-indicator">✗</div>
+                        </div>
+                    </div>
+                    <div class="percentage" id="interferenceValue">DISABLED</div>
+                </div>
+            </div>
+            
+            <div class="lever-column">
+                <div class="lever-group">
+                    <div class="lever-label">PROXY IP FORCE</div>
+                    <div class="lever-container">
+                        <div class="lever-base"></div>
+                        <div class="lever-shaft" id="lever5">
+                            <div class="lever-handle"></div>
+                            <div class="lever-indicator">192.168.0.1</div>
+                        </div>
+                    </div>
+                    <div class="percentage" id="proxyValue">OFFLINE</div>
+                </div>
+                
+                <div class="lever-group">
+                    <div class="lever-label">MARKLOAD SHOTGUN</div>
+                    <div class="lever-container">
+                        <div class="lever-base"></div>
+                        <div class="lever-shaft" id="lever6">
+                            <div class="lever-handle"></div>
+                            <div class="lever-indicator">SAFE</div>
+                        </div>
+                    </div>
+                    <div class="percentage" id="markloadValue">ARMED</div>
+                </div>
+            </div>
+            
+            <div class="lever-column">
+                <div class="lever-group">
+                    <div class="lever-label">CYBERCONNECT REALM</div>
+                    <div class="lever-container">
+                        <div class="lever-base"></div>
+                        <div class="lever-shaft" id="lever7">
+                            <div class="lever-handle"></div>
+                            <div class="lever-indicator">ALIEN-π</div>
+                        </div>
+                    </div>
+                    <div class="percentage" id="realmValue">DORMANT</div>
+                </div>
+                
+                <div class="lever-group">
+                    <div class="lever-label">CAPTCHA CLEARANCE</div>
+                    <div class="lever-container">
+                        <div class="lever-base"></div>
+                        <div class="lever-shaft" id="lever8">
+                            <div class="lever-handle"></div>
+                            <div class="lever-indicator">⍰</div>
+                        </div>
+                    </div>
+                    <div class="percentage" id="captchaValue">PENDING</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PROGRESS MATRIX -->
+        <div class="progress-matrix">
+            <div class="progress-tracker">
+                <div class="tracker-title">WINNING ODDS</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="oddsProgress"></div>
+                </div>
+                <div class="percentage" id="oddsPercent">0%</div>
+            </div>
+            
+            <div class="progress-tracker">
+                <div class="tracker-title">DEPLOYMENT VERTEX</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="deployProgress"></div>
+                </div>
+                <div class="percentage" id="deployPercent">0%</div>
+            </div>
+            
+            <div class="progress-tracker">
+                <div class="tracker-title">DATA INJECTION</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="injectProgress"></div>
+                </div>
+                <div class="percentage" id="injectPercent">0%</div>
+            </div>
+            
+            <div class="progress-tracker">
+                <div class="tracker-title">CLOUD CONGRUENCY</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="cloudProgress"></div>
+                </div>
+                <div class="percentage" id="cloudPercent">0%</div>
+            </div>
+        </div>
+        
+        <!-- ACTION BUTTONS -->
+        <div class="action-grid">
+            <button class="action-btn" id="btnEscalate">ESCELATE % ODDS</button>
+            <button class="action-btn" id="btnDeploy">DEPLOY VERTEX</button>
+            <button class="action-btn" id="btnInject">INJECT DATA FILE</button>
+            <button class="action-btn" id="btnDownload">DOWNLOAD HTML LEVERAGE</button>
+        </div>
+        
+        <!-- DATA TRANSFER -->
+        <div class="data-transfer">
+            <div class="transfer-section">
+                <div class="transfer-title">UPLOAD DATA INJECTION</div>
+                <div class="file-input" id="uploadArea">
+                    DRAG & DROP DETACHMENT FILES<br>
+                    ANTI-INTERFERENCE PROTOCOL ACTIVE
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="uploadProgress"></div>
+                </div>
+                <div class="percentage" id="uploadPercent">0%</div>
+            </div>
+            
+            <div class="transfer-section">
+                <div class="transfer-title">DOWNLOAD CLOUD SUBSTANCE</div>
+                <div class="file-input" id="downloadArea">
+                    REINSTALL BOOT-DRIVE A:/CLOUD<br>
+                    CD-ROM DVD ROM PRODUCT CREATIVES
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="downloadProgress"></div>
+                </div>
+                <div class="percentage" id="downloadPercent">0%</div>
+            </div>
+        </div>
+        
+        <!-- VERTEX DEPLOYMENT GRID -->
+        <div class="vertex-container">
+            <div class="vertex-grid" id="vertexGrid">
+                <!-- Vertex nodes generated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- STATISTICS PANEL -->
+        <div class="stats-panel">
+            <div class="stat-item">
+                <div class="stat-value" id="statOdds">666%</div>
+                <div class="stat-label">WINNING RIGHTS</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="statLatency">NS1</div>
+                <div class="stat-label">DNA-RNA SPEED</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="statProjection">∞</div>
+                <div class="stat-label">PROJECTION POWER</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="statCloud">A:/</div>
+                <div class="stat-label">BOOT-DRIVE ACTIVE</div>
+            </div>
+        </div>
+        
+        <!-- CYBER CONSOLE -->
+        <div class="cyber-console" id="cyberConsole">
+            <div class="console-line log-system">[SYSTEM] CYBERVERTEX TURBO PROTOCOL INITIALIZED</div>
+            <div class="console-line log-system">[STATUS] GOLD HTML INSIDE CLOUD INTEL C. LOADED</div>
+            <div class="console-line log-system">[PROTOCOL] ANTI-MODULE CIPHER ENGAGED</div>
+            <div class="console-line log-system">[REALM] ALIEN Pi RASBERRY REINFORCED</div>
+            <div class="console-line log-warning">[ALERT] AWAITING LEVER ACTIVATION ≥4</div>
+            <div class="console-line log-warning">[WARNING] CAPTCHA CLEARANCE REQUIRED</div>
+        </div>
+        
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="footer-text">© 2024 CYBERCONNECTED REALM | VERTEX STRUGGLING ALIEN Pi TECHNOLOGY</div>
+            <div class="footer-text">PARADOX LIMITED TO UNLIMITED CONGRUENCY LEVELING PROTOCOL</div>
+            <div class="security-code" id="securityCode">
+                FBI.gov/ITALY FRENZY UNCOILED | DRAGON=SNAKE/CAPTCHA | CLOUD INTEL C. | SKU-333-666
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize vertex grid
+        const vertexGrid = document.getElementById('vertexGrid');
+        for (let i = 0; i < 100; i++) {
+            const node = document.createElement('div');
+            node.className = 'vertex-node';
+            node.dataset.index = i;
+            vertexGrid.appendChild(node);
+        }
+        
+        // Lever activation system
+        const levers = document.querySelectorAll('.lever-shaft');
+        const activeLevers = new Set();
+        
+        levers.forEach((lever, index) => {
+            lever.addEventListener('click', () => {
+                if (lever.classList.contains('active')) {
+                    lever.classList.remove('active');
+                    activeLevers.delete(index);
+                    updateLeverIndicator(lever, index, false);
+                } else {
+                    lever.classList.add('active');
+                    activeLevers.add(index);
+                    updateLeverIndicator(lever, index, true);
+                }
+                
+                updateSystemStatus();
+            });
+        });
+        
+        function updateLeverIndicator(lever, index, active) {
+            const indicator = lever.querySelector('.lever-indicator');
+            const percentage = lever.closest('.lever-group').querySelector('.percentage');
+            
+            switch(index) {
+                case 0: // IQ Lever
+                    if (active) {
+                        indicator.textContent = '100%';
+                        percentage.textContent = '100%';
+                        document.getElementById('iqPercent').textContent = '100%';
+                    } else {
+                        indicator.textContent = '0%';
+                        percentage.textContent = '0%';
+                        document.getElementById('iqPercent').textContent = '0%';
+                    }
+                    break;
+                    
+                case 1: // DNA-RNA Latency
+                    if (active) {
+                        indicator.textContent = 'NS1';
+                        percentage.textContent = 'NS1';
+                        document.getElementById('latencyValue').textContent = 'NS1';
+                    } else {
+                        indicator.textContent = 'NS0';
+                        percentage.textContent = 'NS0';
+                        document.getElementById('latencyValue').textContent = 'NS0';
+                    }
+                    break;
+                    
+                case 2: // Vertex Congruency
+                    if (active) {
+                        indicator.textContent = '✓';
+                        percentage.textContent = '100%';
+                        document.getElementById('vertexPercent').textContent = '100%';
+                    } else {
+                        indicator.textContent = 'Ø';
+                        percentage.textContent = '0%';
+                        document.getElementById('vertexPercent').textContent = '0%';
+                    }
+                    break;
+                    
+                case 3: // Anti-Interference
+                    if (active) {
+                        indicator.textContent = '✓';
+                        percentage.textContent = 'ACTIVE';
+                        document.getElementById('interferenceValue').textContent = 'ACTIVE';
+                    } else {
+                        indicator.textContent = '✗';
+                        percentage.textContent = 'DISABLED';
+                        document.getElementById('interferenceValue').textContent = 'DISABLED';
+                    }
+                    break;
+                    
+                case 4: // Proxy IP
+                    if (active) {
+                        indicator.textContent = '10.0.0.1';
+                        percentage.textContent = 'ACTIVE';
+                        document.getElementById('proxyValue').textContent = 'ACTIVE';
+                    } else {
+                        indicator.textContent = '192.168.0.1';
+                        percentage.textContent = 'OFFLINE';
+                        document.getElementById('proxyValue').textContent = 'OFFLINE';
+                    }
+                    break;
+                    
+                case 5: // Markload Shotgun
+                    if (active) {
+                        indicator.textContent = 'FIRED';
+                        percentage.textContent = 'FIRED';
+                        document.getElementById('markloadValue').textContent = 'FIRED';
+                    } else {
+                        indicator.textContent = 'SAFE';
+                        percentage.textContent = 'ARMED';
+                        document.getElementById('markloadValue').textContent = 'ARMED';
+                    }
+                    break;
+                    
+                case 6: // Cyberconnect Realm
+                    if (active) {
+                        indicator.textContent = 'ACTIVE';
+                        percentage.textContent = 'ACTIVE';
+                        document.getElementById('realmValue').textContent = 'ACTIVE';
+                    } else {
+                        indicator.textContent = 'ALIEN-π';
+                        percentage.textContent = 'DORMANT';
+                        document.getElementById('realmValue').textContent = 'DORMANT';
+                    }
+                    break;
+                    
+                case 7: // CAPTCHA Clearance
+                    if (active) {
+                        indicator.textContent = '✓';
+                        percentage.textContent = 'CLEARED';
+                        document.getElementById('captchaValue').textContent = 'CLEARED';
+                    } else {
+                        indicator.textContent = '⍰';
+                        percentage.textContent = 'PENDING';
+                        document.getElementById('captchaValue').textContent = 'PENDING';
+                    }
+                    break;
+            }
+        }
+        
+        // Update system status
+        function updateSystemStatus() {
+            const consoleElement = document.getElementById('cyberConsole');
+            
+            // Clear old messages
+            const systemMessages = document.querySelectorAll('.log-system');
+            systemMessages.forEach(msg => msg.remove());
+            
+            // Add new status
+            const statusMsg = document.createElement('div');
+            statusMsg.className = 'console-line log-system';
+            statusMsg.textContent = `[STATUS] ${activeLevers.size}/8 LEVERS ACTIVE | PROTOCOL: ${activeLevers.size >= 4 ? 'ESCALATING' : 'STANDBY'}`;
+            consoleElement.prepend(statusMsg);
+            
+            // Update progress bars based on active levers
+            const oddsPercent = Math.min(100, activeLevers.size * 12.5);
+            document.getElementById('oddsProgress').style.width = `${oddsPercent}%`;
+            document.getElementById('oddsPercent').textContent = `${oddsPercent}%`;
+            
+            const deployPercent = Math.min(100, activeLevers.size * 15);
+            document.getElementById('deployProgress').style.width = `${deployPercent}%`;
+            document.getElementById('deployPercent').textContent = `${deployPercent}%`;
+            
+            const injectPercent = Math.min(100, activeLevers.size * 10);
+            document.getElementById('injectProgress').style.width = `${injectPercent}%`;
+            document.getElementById('injectPercent').textContent = `${injectPercent}%`;
+            
+            const cloudPercent = Math.min(100, activeLevers.size * 20);
+            document.getElementById('cloudProgress').style.width = `${cloudPercent}%`;
+            document.getElementById('cloudPercent').textContent = `${cloudPercent}%`;
+            
+            // Update statistics
+            document.getElementById('statOdds').textContent = `${666 + oddsPercent}%`;
+            document.getElementById('statLatency').textContent = activeLevers.has(1) ? 'NS1' : 'NS0';
+            document.getElementById('statProjection').textContent = activeLevers.size >= 4 ? '∞' : '0';
+            document.getElementById('statCloud').textContent = activeLevers.size >= 2 ? 'A:/ACTIVE' : 'A:/';
+            
+            // Animate vertex nodes
+            const nodes = document.querySelectorAll('.vertex-node');
+            nodes.forEach((node, i) => {
+                if (Math.random() * 100 < oddsPercent) {
+                    node.classList.add('active');
+                    setTimeout(() => node.classList.remove('active'), 1000);
+                }
+            });
+            
+            // Enable action buttons if 4+ levers active
+            const actionBtns = document.querySelectorAll('.action-btn');
+            actionBtns.forEach(btn => {
+                if (activeLevers.size >= 4) {
+                    btn.disabled = false;
+                } else {
+                    btn.disabled = true;
+                }
+            });
+        }
+        
+        // Action button handlers
+        document.getElementById('btnEscalate').addEventListener('click', function() {
+            this.classList.add('active');
+            logMessage('[ACTION] ESCALATING WINNING ODDS...', 'warning');
+            
+            // Simulate escalation
+            let progress = parseInt(document.getElementById('oddsPercent').textContent);
+            const interval = setInterval(() => {
+                progress += 10;
+                document.getElementById('oddsProgress').style.width = `${Math.min(100, progress)}%`;
+                document.getElementById('oddsPercent').textContent = `${Math.min(100, progress)}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    logMessage('[SUCCESS] ODDS ESCALATED TO MAXIMUM 666%', 'success');
+                    this.classList.remove('active');
+                }
+            }, 100);
+        });
+        
+        document.getElementById('btnDeploy').addEventListener('click', function() {
+            this.classList.add('active');
+            logMessage('[ACTION] DEPLOYING VERTEX CONGRUENCY...', 'warning');
+            
+            // Animate vertex grid
+            const nodes = document.querySelectorAll('.vertex-node');
+            let activated = 0;
+            
+            const deployInterval = setInterval(() => {
+                const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+                randomNode.classList.add('active');
+                
+                setTimeout(() => {
+                    randomNode.classList.remove('active');
+                }, 500);
+                
+                activated++;
+                document.getElementById('deployProgress').style.width = `${Math.min(100, activated)}%`;
+                document.getElementById('deployPercent').textContent = `${Math.min(100, activated)}%`;
+                
+                if (activated >= 100) {
+                    clearInterval(deployInterval);
+                    logMessage('[SUCCESS] VERTEX DEPLOYMENT COMPLETE', 'success');
+                    this.classList.remove('active');
+                }
+            }, 50);
+        });
+        
+        document.getElementById('btnInject').addEventListener('click', function() {
+            this.classList.add('active');
+            logMessage('[ACTION] INJECTING DATA FILE DETACHMENT...', 'warning');
+            
+            // Simulate injection
+            let progress = 0;
+            const injectInterval = setInterval(() => {
+                progress += 5;
+                document.getElementById('injectProgress').style.width = `${progress}%`;
+                document.getElementById('injectPercent').textContent = `${progress}%`;
+                document.getElementById('uploadProgress').style.width = `${progress}%`;
+                document.getElementById('uploadPercent').textContent = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(injectInterval);
+                    logMessage('[SUCCESS] DATA INJECTION COMPLETE - ANTI-INTERFERENCE PROTOCOL ACTIVE', 'success');
+                    logMessage('[DATA] CD-ROM DVD ROM PRODUCT CREATIVES LOADED', 'data');
+                    this.classList.remove('active');
+                }
+            }, 100);
+        });
+        
+        document.getElementById('btnDownload').addEventListener('click', function() {
+            this.classList.add('active');
+            logMessage('[ACTION] DOWNLOADING HTML LEVERAGE...', 'warning');
+            logMessage('[SYSTEM] REINSTALLING BOOT-DRIVE A:/CLOUD...', 'system');
+            
+            // Simulate download
+            let progress = 0;
+            const downloadInterval = setInterval(() => {
+                progress += 5;
+                document.getElementById('downloadProgress').style.width = `${progress}%`;
+                document.getElementById('downloadPercent').textContent = `${progress}%`;
+                
+                // Update download area text
+                const downloadArea = document.getElementById('downloadArea');
+                const downloadPercent = document.getElementById('downloadPercent');
+                
+                if (progress < 25) {
+                    downloadArea.innerHTML = 'INITIALIZING BOOT-DRIVE...';
+                } else if (progress < 50) {
+                    downloadArea.innerHTML = 'LOADING CLOUD SUBSTANCE...';
+                } else if (progress < 75) {
+                    downloadArea.innerHTML = 'EXTRACTING HTML GOLD...';
+                } else {
+                    downloadArea.innerHTML = 'FINALIZING LEVERAGE PROTOCOL...';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(downloadInterval);
+                    logMessage('[SUCCESS] HTML LEVERAGE DOWNLOAD COMPLETE', 'success');
+                    logMessage('[SYSTEM] BOOT-DRIVE A:/CLOUD REINSTALLED SUCCESSFULLY', 'system');
+                    logMessage('[SECURITY] CYBERCONNECTED REALM STABILIZED', 'data');
+                    this.classList.remove('active');
+                    
+                    // Show completion message
+                    setTimeout(() => {
+                        logMessage('[MISSION] ALL PROTOCOLS COMPLETE - SYSTEM STABLE', 'success');
+                        logMessage('[FINAL] WINNING PERCENTAGE: 666% | VERTEX CONGRUENCY: 100%', 'data');
+                    }, 1000);
+                }
+            }, 100);
+        });
+        
+        // File upload handler
+        const uploadArea = document.getElementById('uploadArea');
+        uploadArea.addEventListener('click', () => {
+            if (activeLevers.size >= 4) {
+                logMessage('[UPLOAD] INITIATING DATA DETACHMENT PROTOCOL...', 'system');
+                
+                // Create file input
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = '*/*';
+                fileInput.style.display = 'none';
+                fileInput.addEventListener('change', handleFileSelect);
+                document.body.appendChild(fileInput);
+                fileInput.click();
+                document.body.removeChild(fileInput);
+            } else {
+                logMessage('[ERROR] REQUIRES ≥4 LEVERS FOR UPLOAD PROTOCOL', 'error');
+            }
+        });
+        
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                logMessage(`[UPLOAD] SELECTED: ${file.name} (${file.size} bytes)`, 'data');
+                logMessage('[UPLOAD] ANTI-MODULE CIPHER ACTIVATED', 'system');
+                
+                // Simulate upload progress
+                let progress = 0;
+                const uploadInterval = setInterval(() => {
+                    progress += 10;
+                    document.getElementById('uploadProgress').style.width = `${progress}%`;
+                    document.getElementById('uploadPercent').textContent = `${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(uploadInterval);
+                        logMessage('[SUCCESS] FILE UPLOADED AND ENCRYPTED', 'success');
+                        logMessage('[SYSTEM] OBJECT INSERTED INTO CLOUD INTEL C.', 'system');
+                    }
+                }, 200);
+            }
+        }
+        
+        // Console logging function
+        function logMessage(message, type) {
+            const consoleElement = document.getElementById('cyberConsole');
+            const msg = document.createElement('div');
+            msg.className = `console-line log-${type}`;
+            msg.textContent = message;
+            consoleElement.appendChild(msg);
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+        }
+        
+        // Initialize security code rotation
+        const securityCodes = [
+            "FBI.gov/ITALY FRENZY UNCOILED | DRAGON=SNAKE/CAPTCHA",
+            "CLOUD INTEL C. | SKU-333-666 | LENS 8mm FILM SOURCE",
+            "PIPE-LINE DESK ANIMATED | PARADOX LIMITED TO UNLIMITED",
+            "JET-DEPLOYED PACKAGE TAR | CD-ROM DVD ROM PRODUCT CREATIVES",
+            "ALIEN Pi RASBERRY REINFORCED | VERTEX STRUGGLING REALM"
+        ];
+        
+        let codeIndex = 0;
+        setInterval(() => {
+            document.getElementById('securityCode').textContent = securityCodes[codeIndex];
+            codeIndex = (codeIndex + 1) % securityCodes.length;
+        }, 5000);
+        
+        // Initialize system
+        setTimeout(() => {
+            logMessage('[INIT] HTML GOLD PROTOCOL LOADED SUCCESSFULLY', 'system');
+            logMessage('[READY] AWAITING LEVER ACTIVATION SEQUENCE', 'warning');
+            logMessage('[INFO] REQUIREMENT: ≥4 LEVERS FOR FULL DEPLOYMENT', 'data');
+        }, 1000);
+    </script>
+</body>
+</html>
